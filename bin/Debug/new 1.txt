@@ -1,0 +1,95 @@
+  function PUTANDSEND() {
+        //右键标记
+        map.addEventListener("rightclick", putAndsend);
+        //左键标记
+        map.addEventListener("click", putAndsend("HHA","BA"));
+    }
+    var marker_num = 0;
+    function putAndsend(title,tag,e)
+    {
+        //放标注
+        var p1=new BMap.Point(e.point.lng,e.point.lat);
+        var myIcon = new BMap.Icon("/image/icon1.png", new BMap.Size(24, 24));
+        var marker = new BMap.Marker(p1, { icon: myIcon });  // 创建标注
+		//左键标记
+        map.addEventListener("click", map.addOverlay(marker));
+        //map.addOverlay(marker);              // 将标注添加到地图中
+
+        marker_num++;//标注索引，这个是个全局变量
+        var whichCar=window.external.setWhichCar();
+        var label=new BMap.Label(title+tag)",{offset:new BMap.Size(20,-10)});
+        marker.setLabel(label);
+        //给WINFORM传值
+        window.external.PutIntotextBox(marker_num,whichCar,e.point.lng,e.point.lat);
+
+    } 
+	    function AddMarker(Title,Tag)
+	{
+	    //var Maker(content:"标签："+Tag,title:Title,imageOffset: {width:0,height:3});
+		map.addEventListener("click",function()
+		{
+		 //放标注
+        var p1=new BMap.Point(e.point.lng,e.point.lat);
+        var myIcon = new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+          imageOffset: new BMap.Size(Maker.imageOffset.width,Maker.imageOffset.height)
+        });
+        var marker = new BMap.Marker(p1, { icon: myIcon });  // 创建标注
+		var label = new BMap.Label(Maker.title,{offset: new BMap.Size(25,5)});
+		);
+		}
+        var opts = {
+          width: 200,
+          title: Maker.title
+          enableMessage: false
+		};
+        var infoWindow = new BMap.InfoWindow(Maker.content,opts);
+        marker.setLabel(label);
+        addClickHandler(marker,infoWindow);
+        map.addOverlay(marker);
+		
+        
+	}
+	    function AddMarker(Title,Tag)
+	{
+	    var Maker(content:"标签："+Tag,title:Title);
+		map.addEventListener("click",function(e)
+		{
+		 //放标注
+        var p1=new BMap.Point(e.point.lng,e.point.lat);
+        var myIcon = new BMap.Icon("/image/icon1.png", new BMap.Size(24, 24));
+        marker = new BMap.Marker(p1, { icon: myIcon });  // 创建标注
+		var label = new BMap.Label(Maker.title,{offset: new BMap.Size(25,5)});
+		   var opts = {
+          width: 200,
+          title: Maker.title
+          enableMessage: false
+		};
+        var infoWindow = new BMap.InfoWindow(Maker.content,opts);
+        marker.setLabel(label);
+        addClickHandler(marker,infoWindow);
+        map.addOverlay(marker); 
+		});
+        
+	}
+	    //添加包含一个信息窗口的标注
+
+	function AddWindowMaker(lng, lat, Title1，content1)
+	{
+
+		var marker = new BMap.Marker(new BMap.Point(lng,lat));  // 创建标注
+
+        // 创建信息窗口对象
+        var opts = {
+          width: 200,
+          title: Title,
+          enableMessage: false
+		};
+        var info = new BMap.InfoWindow(content,opts);
+        addClickHandler(marker,info);
+
+    }
+	    //自定义标注点，与winform交互
+	function ADDMarker(T,C)
+	{
+	 map.addEventListener("click",AddWindowMaker(e.point.lng,e.point.lat,T,C));
+	}

@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>                                          
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html, #l-map {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?ak=iEEc8wfA2SrkaEc6Kdbp26fs&v=2.0"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>
+    <script type="text/javascript" src="js/MarkTool.js"></script>
+	<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="js/DistanceTool_min.js"></script>
+    <title>显示地图</title>
+</head>
+<body>
+    <div id="l-map"></div>
+</body>
+</html>
+<script type="text/javascript">
+
+    var map = new BMap.Map('l-map',{minZoom:16,maxZoom:19});
+    map.centerAndZoom(new BMap.Point(113.87154, 22.93004), 16);
+    //定义必要的公共对象
+    var M = new Array();// 记录当前添加的maker
+    var index=0;//记录数组的个数
+    //var infoWindow;
+    //限制区域
+    var b = new BMap.Bounds(new BMap.Point(113.86644,22.92245),
+               new BMap.Point(113.87617,22.93616));
+    try {
+        BMapLib.AreaRestriction.setBounds(map, b);
+    } catch(e) {
+        alert(e);
+    }
+    map.enableDragging(); //启用地图拖拽事件，默认启用(可不写)
+    map.enableScrollWheelZoom(); //启用地图滚轮放大缩小
+    map.enableDoubleClickZoom(); //启用鼠标双击放大，默认启用(可不写)
+    map.enableKeyboard(); //启用键盘上下左右键移动地图
+    map.enableContinuousZoom();   // 开启连续缩放效果
+    map.enableInertialDragging(); // 开启惯性拖拽效果
+    map.addControl(new BMap.ScaleControl()); //添加比例尺控件(左下角显示的比例尺控件)
+    map.addControl(new BMap.NavigationControl());
+    map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
+    map.enableKeyboard();                         // 启用键盘操作。
+    map.addControl(new BMap.MapTypeControl());//添加地图类型控件
+    //fnOK("gg", "hh", "bb");
+    //addMapOverlay();
+    //Openwinform();
+	//创建marktool
+
+    //mkr.openInfoWindow(infoWin);
+	//<!-- AddWindowMaker(f(),"hah");
+    //addClickHandler();
+    //信息窗口
+    function addClickHandler(target, window) {
+        target.addEventListener("click", function () {
+            target.openInfoWindow(window);
+        });
+    }
+	//初始化标注
+    function f()
+	{
+	    //var infoWin = new BMap.InfoWindow("HAHA", { offset: new BMap.Size(0, -10) });
+	    //var gc = new BMap.Geocoder();
+	    var mrktool = new BMapLib.MarkerTool(map, { followText: "标注",autoClose:false });
+	    //alert( mrktool.open());
+       if(mrktool.open())
+	   {
+	   var icon=BMapLib.MarkerTool.SYS_ICONS[0];
+	   mrktool.setIcon(icon);
+       }
+       mrktool.addEventListener("markend", function (e) {
+           M = e.marker;
+           ////创建右键菜单
+           //var markerMenu = new BMap.ContextMenu();
+           //markerMenu.addItem(new BMap.MenuItem('删除', removeMarker.bind(M)));
+
+           //M = e.marker;
+           //M.addContextMenu(markerMenu);
+           //M.openInfoWindow(infoWin);
+           //console.log(M);
+           //    var pt1 = mkr.point;
+           //    gc.getLocation(pt, function (rs) {
+           //        var addComp = rs.addressComponents;
+           //        alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+           //    });
+
+           //    M.enableDragging();
+           //    M.addEventListener('dragstart', function () {
+           //        alert(222222222222222222222);
+           //    });
+           //M.addEventListener('click', function () {
+               
+           //});
+           M.enableDragging();
+           M.addEventListener("dragend", function () {
+               M = this;
+               window.external.ShowInfo();
+           });
+           M.addEventListener("rightclick", function (evt) {
+               M = this;
+           });
+           //创建右键菜单
+           var menu = new BMap.ContextMenu();
+           //var removeMarker1 = function (e, ee, M) {
+           //    map.removeOverlay(M);
+           //}
+           var txtMenuItem = [
+               {
+                   text: '删除',
+                   callback: function () { //removeMarker1.bind(M);
+                       map.removeOverlay(M);
+                   }
+               },
+               {
+                   text: '修改信息',
+                   callback: function () { window.external.ShowInfo(); }
+               }
+           ];
+           for (var i = 0; i < txtMenuItem.length; i++) {
+               menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+           }
+           M.addContextMenu(menu);
+           window.external.ShowInfo();
+       });
+       map.addEventListener("rightclick", function () { mrktool.close(); });
+    }
+	//创建有信息窗口的标注
+    function CreateMarker(tag, note, name) {
+        if (M) {
+            //var removeMarker = function (e, ee, M) {
+            //    map.removeOverlay(marker);
+            //}
+            ////创建右键菜单
+            //var markerMenu = new BMap.ContextMenu();
+            //markerMenu.addItem(new BMap.MenuItem('删除', removeMarker.bind(M)));
+            
+	        //设置label
+	        var label = new BMap.Label(name, { offset: new BMap.Size(15, 5) });
+	        M.setLabel(label);
+	        var opts = {
+	            width: 200,
+	            title: name,
+	            enableMessage: false
+	        };
+	        var information = "标签: " + tag + "<br>" + "备注: " + note;
+	        var infoWindow = new BMap.InfoWindow(information, opts);
+	        addClickHandler(M, infoWindow);
+	    }
+    }
+    ////地址解析
+    //var P=function(address)
+    //{
+    //    var myGeo = new BMap.Geocoder();// 创建地址解析器实例
+    //    // 将地址解析结果显示在地图上,并调整地图视野
+    //    myGeo.getPoint(address, function (point) {
+    //        if (point) {
+    //            return new BMap.Point( point.lng,point.lat);
+    //        } else {
+    //            alert("您选择地址没有解析到结果!");
+    //        }
+    //    }, "东莞市");
+    //}
+    //alert(P("置禾超市"));
+    //经纬度转换为地点
+    var place = function (lng, lat) {
+        return new BMap.Point(lng,lat);
+    }
+    //驾车导航
+    function CarN(start, end) {
+
+        var driving = new BMap.DrivingRoute(map, {
+            renderOptions: {
+                map: map,
+                autoViewport: true
+            }
+        });
+        driving.search(start,end);
+        function addClickHandler(target, window) {
+            target.addEventListener("click", function () {
+                target.openInfoWindow(window);
+
+            });
+        }
+    }
+    //步行导航
+    function WalkerN(start, end) {
+        var transit = new BMap.WalkingRoute(map, {
+            renderOptions: { map: map, panel: "results" }
+        });
+        transit.search(start, end);
+    }
+     //添加标注
+    function addMapOverlay(markers){
+      // var markers = [
+      //  {content:"分类：购物超市",title:"置禾超市",imageOffset: {width:0,height:3},position:{lat:22.931241,lng:113.868932}},
+      //  {content:"分类：银行",title:"工商银行",imageOffset: {width:0,height:3},position:{lat:22.93095,lng:113.868362}},
+      //  {content:"分类：图书",title:"图书馆",imageOffset: {width:0,height:3},position:{lat:22.929843,lng:113.872314}},
+      //];
+      for(var index = 0; index < markers.length; index++ ){
+        //var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
+          var marker = new BMap.Marker(markers[index], { icon: BMapLib.MarkerTool.SYS_ICONS[0] });
+        var label = new BMap.Label(index, { offset: new BMap.Size(15,5) });
+        //var opts = {
+        //  width: 200,
+        //  title: markers[index].title,
+        //  enableMessage: false
+        //};
+        //var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
+        marker.setLabel(label);
+        M = marker;
+        M.enableDragging();
+        M.addEventListener("dragend", function () {
+            M = this;
+            window.external.ShowInfo();
+        });
+        M.addEventListener("rightclick", function (evt) {
+            M = this;
+        });
+          //创建右键菜单
+        var menu = new BMap.ContextMenu();
+          //var removeMarker1 = function (e, ee, M) {
+          //    map.removeOverlay(M);
+          //}
+        var txtMenuItem = [
+            {
+                text: '删除',
+                callback: function () { //removeMarker1.bind(M);
+                    map.removeOverlay(M);
+                }
+            },
+            {
+                text: '修改信息',
+                callback: function () { window.external.ShowInfo(); }
+            }
+        ];
+        for (var i = 0; i < txtMenuItem.length; i++) {
+            menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+        }
+        M.addContextMenu(menu);
+        //window.external.ShowInfo();
+        //addClickHandler(marker,infoWindow);
+        map.addOverlay(marker);
+      };
+    }
+    //搜索
+    var local = new BMap.LocalSearch(map, {
+        renderOptions: { map: map }
+    });
+    function LocalSearch(keywords)
+    {
+        if (local)
+        { local.clearResults(); }     
+        //local.search(keywords);
+        local.searchInBounds(keywords, b);
+        
+    }
+    //测量距离
+    function openGetDistance() {
+
+        var myDis = new BMapLib.DistanceTool(map); //map为上面已经初始化好的地图实例  
+        myDis.open();
+        //myDis.addEventListener("drawend", function (e) {
+        //    addMapOverlay(e.points);
+        //});
+    }
+    //---------------------调用winform的方法-------------------
+       
+        
+    </script>
