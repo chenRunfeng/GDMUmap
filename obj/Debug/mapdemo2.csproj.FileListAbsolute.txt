@@ -16,3 +16,12 @@ E:\数据结构项目\GDMUmap\mapdemo2\mapdemo2\obj\Debug\mapdemo2.MainForm.reso
 E:\数据结构项目\GDMUmap\mapdemo2\mapdemo2\obj\Debug\mapdemo2.frmMarker.resources
 E:\数据结构项目\GDMUmap\mapdemo2\mapdemo2\obj\Debug\mapdemo2.Properties.Resources.resources
 E:\数据结构项目\GDMUmap\mapdemo2\mapdemo2\obj\Debug\mapdemo2.csproj.GenerateResource.Cache
+E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.exe
+E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.pdb
+E:\数据结构项目\GDMUmap\GDMUmap\bin\Debug\mapdemo2.exe
+E:\数据结构项目\GDMUmap\GDMUmap\bin\Debug\mapdemo2.pdb
+E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.csprojResolveAssemblyReference.cache
+E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.MainForm.resources
+E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.frmMarker.resources
+E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.Properties.Resources.resources
+E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.csproj.GenerateResource.Cache

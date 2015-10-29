@@ -3,20 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace 转换控制台到窗体
+namespace mapdemo2
 {
     class Vertex
     {
-        
-        
-            public string Tag;
-            public string Name;
-            public string Note;
-            public double lng;//经纬
-            public double lat;
 
-
-
-        
+        public Vertex(string name, string tag, string note, double lng, double lat)
+        {
+            Name = name;
+            Tag = tag;
+            Note = note;
+            Lng = lng;
+            Lat = lat;
+        }
+        public string Tag;
+        public string Name;
+        public string Note;
+        public double Lng;//经纬
+        public double Lat;
     }
+
+
+
+
 }

@@ -15,6 +15,8 @@ namespace mapdemo2
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class frmMarker : Form
     {
+        Vertex[] vertexs;
+        static int vexnumber = 0;
         public frmMarker()
         {
             InitializeComponent();
@@ -33,6 +35,9 @@ namespace mapdemo2
         private void button1_Click(object sender, EventArgs e)
         {
             MainForm.fr1.AddInfo( comTag.Text, txtNote.Text, txtTitle.Text);
+            double lng, lat;
+            vertexs[vexnumber] = new Vertex(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
+            vexnumber++;
         }
     }
 }
