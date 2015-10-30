@@ -19,10 +19,12 @@ namespace mapdemo2
         //Vertex[] vertexs;
         //static int vexnumber=0;
         public static MainForm fr1;
+        public static WebBrowser web1;
         public MainForm()
         {
             InitializeComponent();
             fr1 = this;
+            web1 = this.webBrowser1;
         }
 
         private void Form1_Load(object sender, EventArgs e)

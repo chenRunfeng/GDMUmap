@@ -36,6 +36,8 @@ namespace mapdemo2
         {
             MainForm.fr1.AddInfo( comTag.Text, txtNote.Text, txtTitle.Text);
             double lng, lat;
+            lng = double.Parse(MainForm.web1.Document.GetElementById("lng").InnerText);
+            lat = double.Parse(MainForm.web1.Document.GetElementById("lat").InnerText);
             vertexs[vexnumber] = new Vertex(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
             vexnumber++;
         }

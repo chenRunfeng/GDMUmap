@@ -41,24 +41,24 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnDreset = new System.Windows.Forms.Button();
+            this.txtDistance = new System.Windows.Forms.TextBox();
+            this.labDistance = new System.Windows.Forms.Label();
+            this.txtDend = new System.Windows.Forms.TextBox();
+            this.labDend = new System.Windows.Forms.Label();
+            this.txtDstart = new System.Windows.Forms.TextBox();
+            this.labDsart = new System.Windows.Forms.Label();
+            this.btnDsave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btnDsave = new System.Windows.Forms.Button();
-            this.labDsart = new System.Windows.Forms.Label();
-            this.txtDstart = new System.Windows.Forms.TextBox();
-            this.txtDend = new System.Windows.Forms.TextBox();
-            this.labDend = new System.Windows.Forms.Label();
-            this.txtDistance = new System.Windows.Forms.TextBox();
-            this.labDistance = new System.Windows.Forms.Label();
-            this.btnDreset = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -215,6 +215,89 @@
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.btnDreset);
+            this.tabPage3.Controls.Add(this.txtDistance);
+            this.tabPage3.Controls.Add(this.labDistance);
+            this.tabPage3.Controls.Add(this.txtDend);
+            this.tabPage3.Controls.Add(this.labDend);
+            this.tabPage3.Controls.Add(this.txtDstart);
+            this.tabPage3.Controls.Add(this.labDsart);
+            this.tabPage3.Controls.Add(this.btnDsave);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(187, 129);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "距离编辑";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnDreset
+            // 
+            this.btnDreset.Location = new System.Drawing.Point(107, 103);
+            this.btnDreset.Name = "btnDreset";
+            this.btnDreset.Size = new System.Drawing.Size(56, 23);
+            this.btnDreset.TabIndex = 7;
+            this.btnDreset.Text = "重置";
+            this.btnDreset.UseVisualStyleBackColor = true;
+            // 
+            // txtDistance
+            // 
+            this.txtDistance.Location = new System.Drawing.Point(59, 76);
+            this.txtDistance.Name = "txtDistance";
+            this.txtDistance.Size = new System.Drawing.Size(100, 21);
+            this.txtDistance.TabIndex = 6;
+            // 
+            // labDistance
+            // 
+            this.labDistance.AutoSize = true;
+            this.labDistance.Location = new System.Drawing.Point(14, 85);
+            this.labDistance.Name = "labDistance";
+            this.labDistance.Size = new System.Drawing.Size(41, 12);
+            this.labDistance.TabIndex = 5;
+            this.labDistance.Text = "距离：";
+            // 
+            // txtDend
+            // 
+            this.txtDend.Location = new System.Drawing.Point(59, 41);
+            this.txtDend.Name = "txtDend";
+            this.txtDend.Size = new System.Drawing.Size(100, 21);
+            this.txtDend.TabIndex = 4;
+            // 
+            // labDend
+            // 
+            this.labDend.AutoSize = true;
+            this.labDend.Location = new System.Drawing.Point(13, 50);
+            this.labDend.Name = "labDend";
+            this.labDend.Size = new System.Drawing.Size(41, 12);
+            this.labDend.TabIndex = 3;
+            this.labDend.Text = "终点：";
+            // 
+            // txtDstart
+            // 
+            this.txtDstart.Location = new System.Drawing.Point(59, 9);
+            this.txtDstart.Name = "txtDstart";
+            this.txtDstart.Size = new System.Drawing.Size(100, 21);
+            this.txtDstart.TabIndex = 2;
+            // 
+            // labDsart
+            // 
+            this.labDsart.AutoSize = true;
+            this.labDsart.Location = new System.Drawing.Point(13, 18);
+            this.labDsart.Name = "labDsart";
+            this.labDsart.Size = new System.Drawing.Size(41, 12);
+            this.labDsart.TabIndex = 1;
+            this.labDsart.Text = "起点：";
+            // 
+            // btnDsave
+            // 
+            this.btnDsave.Location = new System.Drawing.Point(25, 103);
+            this.btnDsave.Name = "btnDsave";
+            this.btnDsave.Size = new System.Drawing.Size(56, 23);
+            this.btnDsave.TabIndex = 0;
+            this.btnDsave.Text = "保存";
+            this.btnDsave.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -251,89 +334,6 @@
             this.webBrowser1.Size = new System.Drawing.Size(715, 528);
             this.webBrowser1.TabIndex = 1;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.btnDreset);
-            this.tabPage3.Controls.Add(this.txtDistance);
-            this.tabPage3.Controls.Add(this.labDistance);
-            this.tabPage3.Controls.Add(this.txtDend);
-            this.tabPage3.Controls.Add(this.labDend);
-            this.tabPage3.Controls.Add(this.txtDstart);
-            this.tabPage3.Controls.Add(this.labDsart);
-            this.tabPage3.Controls.Add(this.btnDsave);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(187, 129);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "距离编辑";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // btnDsave
-            // 
-            this.btnDsave.Location = new System.Drawing.Point(25, 103);
-            this.btnDsave.Name = "btnDsave";
-            this.btnDsave.Size = new System.Drawing.Size(56, 23);
-            this.btnDsave.TabIndex = 0;
-            this.btnDsave.Text = "保存";
-            this.btnDsave.UseVisualStyleBackColor = true;
-            // 
-            // labDsart
-            // 
-            this.labDsart.AutoSize = true;
-            this.labDsart.Location = new System.Drawing.Point(13, 18);
-            this.labDsart.Name = "labDsart";
-            this.labDsart.Size = new System.Drawing.Size(41, 12);
-            this.labDsart.TabIndex = 1;
-            this.labDsart.Text = "起点：";
-            // 
-            // txtDstart
-            // 
-            this.txtDstart.Location = new System.Drawing.Point(59, 9);
-            this.txtDstart.Name = "txtDstart";
-            this.txtDstart.Size = new System.Drawing.Size(100, 21);
-            this.txtDstart.TabIndex = 2;
-            // 
-            // txtDend
-            // 
-            this.txtDend.Location = new System.Drawing.Point(59, 41);
-            this.txtDend.Name = "txtDend";
-            this.txtDend.Size = new System.Drawing.Size(100, 21);
-            this.txtDend.TabIndex = 4;
-            // 
-            // labDend
-            // 
-            this.labDend.AutoSize = true;
-            this.labDend.Location = new System.Drawing.Point(13, 50);
-            this.labDend.Name = "labDend";
-            this.labDend.Size = new System.Drawing.Size(41, 12);
-            this.labDend.TabIndex = 3;
-            this.labDend.Text = "终点：";
-            // 
-            // txtDistance
-            // 
-            this.txtDistance.Location = new System.Drawing.Point(59, 76);
-            this.txtDistance.Name = "txtDistance";
-            this.txtDistance.Size = new System.Drawing.Size(100, 21);
-            this.txtDistance.TabIndex = 6;
-            // 
-            // labDistance
-            // 
-            this.labDistance.AutoSize = true;
-            this.labDistance.Location = new System.Drawing.Point(14, 85);
-            this.labDistance.Name = "labDistance";
-            this.labDistance.Size = new System.Drawing.Size(41, 12);
-            this.labDistance.TabIndex = 5;
-            this.labDistance.Text = "距离：";
-            // 
-            // btnDreset
-            // 
-            this.btnDreset.Location = new System.Drawing.Point(107, 103);
-            this.btnDreset.Name = "btnDreset";
-            this.btnDreset.Size = new System.Drawing.Size(56, 23);
-            this.btnDreset.TabIndex = 7;
-            this.btnDreset.Text = "重置";
-            this.btnDreset.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -350,10 +350,10 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
