@@ -10,6 +10,8 @@
             overflow: hidden;
             margin: 0;
         }
+        #lng{}
+        #lat{}
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?ak=iEEc8wfA2SrkaEc6Kdbp26fs&v=2.0"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>
@@ -19,6 +21,8 @@
     <title>显示地图</title>
 </head>
 <body>
+    <div id="lng" style="visibility:visible"></div>
+    <div id="lat" style="visibility:visible"></div>
     <div id="l-map"></div>
 </body>
 </html>
@@ -27,8 +31,9 @@
     var map = new BMap.Map('l-map',{minZoom:16,maxZoom:19});
     map.centerAndZoom(new BMap.Point(113.87154, 22.93004), 16);
     //定义必要的公共对象
-    var M = new Array();// 记录当前添加的maker
-    var index=0;//记录数组的个数
+    var M;// 记录当前添加的maker
+    var index = 0;//记录数组的个数
+    //alert("哈哈");
     //var infoWindow;
     //限制区域
     var b = new BMap.Bounds(new BMap.Point(113.86644,22.92245),
@@ -77,6 +82,10 @@
        }
        mrktool.addEventListener("markend", function (e) {
            M = e.marker;
+           //document.getElementById("lng").innerHTML = M.getPosition().lng;
+           //document.getElementById("lat").innerHTML = M.Point.lat;
+           //alert(M.getPosition());
+           //alert(e.Point.lng);
            ////创建右键菜单
            //var markerMenu = new BMap.ContextMenu();
            //markerMenu.addItem(new BMap.MenuItem('删除', removeMarker.bind(M)));
@@ -152,6 +161,9 @@
 	        var information = "标签: " + tag + "<br>" + "备注: " + note;
 	        var infoWindow = new BMap.InfoWindow(information, opts);
 	        addClickHandler(M, infoWindow);
+	        document.getElementById("lng").innerHTML = M.point.lng;
+	        document.getElementById("lat").innerHTML = M.point.lat;
+	        alert(M.point.lng);
 	    }
     }
     ////地址解析

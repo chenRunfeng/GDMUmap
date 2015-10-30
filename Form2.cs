@@ -15,8 +15,8 @@ namespace mapdemo2
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class frmMarker : Form
     {
-        Vertex[] vertexs;
-        static int vexnumber = 0;
+        Vertex[] vertexs=new Vertex[100];
+        static int vexnumber=0;
         public frmMarker()
         {
             InitializeComponent();

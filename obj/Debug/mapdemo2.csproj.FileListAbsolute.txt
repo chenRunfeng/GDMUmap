@@ -24,3 +24,4 @@ E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.MainForm.resources
 E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.frmMarker.resources
 E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.Properties.Resources.resources
 E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.csproj.GenerateResource.Cache
+E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.csprojResolveAssemblyReference.cache
