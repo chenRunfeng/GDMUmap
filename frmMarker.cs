@@ -11,12 +11,13 @@ using System.Collections;
 
 namespace mapdemo2
 {
+    //与网页交互必需的两句
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class frmMarker : Form
     {
-        Vertex[] vertexs=new Vertex[100];
-        static int vexnumber=0;
+        //Vertex[] vertexs=new Vertex[100];
+        //static int vexnumber=0;
         public frmMarker()
         {
             InitializeComponent();
@@ -38,8 +39,11 @@ namespace mapdemo2
             double lng, lat;
             lng = double.Parse(MainForm.web1.Document.GetElementById("lng").InnerText);
             lat = double.Parse(MainForm.web1.Document.GetElementById("lat").InnerText);
-            vertexs[vexnumber] = new Vertex(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
-            vexnumber++;
+            //vertexs[vexnumber] = new Vertex(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
+            //vexnumber++;
+            Node node = new Node(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
+            MainForm.Map.Node.Nodes.Add(node);
+            //node.nodes.Add(node);
         }
     }
 }

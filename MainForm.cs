@@ -18,8 +18,23 @@ namespace mapdemo2
     {
         //Vertex[] vertexs;
         //static int vexnumber=0;
+        private static Graphic map;
         public static MainForm fr1;
         public static WebBrowser web1;
+
+        internal static Graphic Map
+        {
+            get
+            {
+                return map;
+            }
+
+            set
+            {
+                map = value;
+            }
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -80,6 +95,7 @@ namespace mapdemo2
             frmMarker fr2 = new frmMarker();
             fr2.ShowDialog();
         }
+        //public Node Search(string Sname,string Stag,string Snote)
 
         private void btnMarker_Click(object sender, EventArgs e)
         {
@@ -98,7 +114,13 @@ namespace mapdemo2
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+           
             webBrowser1.Document.InvokeScript("LocalSearch", new object[] { txtSearch.Text });
+        }
+
+        private void btnDsave_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

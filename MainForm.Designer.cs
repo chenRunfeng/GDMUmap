@@ -297,6 +297,7 @@
             this.btnDsave.TabIndex = 0;
             this.btnDsave.Text = "保存";
             this.btnDsave.UseVisualStyleBackColor = true;
+            this.btnDsave.Click += new System.EventHandler(this.btnDsave_Click);
             // 
             // groupBox1
             // 
