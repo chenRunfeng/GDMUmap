@@ -9,7 +9,7 @@ namespace mapdemo2
     {
         private Node snode;//起点
         private Node enode;//终点
-        private int svalue;//权值
+        private double svalue;//权值
         internal EdgesCollection edges;//边的集合
         private object parant;
         public Edge(Node snode,Node enode)
@@ -18,9 +18,17 @@ namespace mapdemo2
             this.enode = enode;
             edges = new EdgesCollection(this);
         }
+        public Edge(Node snode, Node enode,double svalue)
+        {
+            this.snode = snode;
+            this.enode = enode;
+            this.svalue = svalue;
+            edges = new EdgesCollection(this);
+        }
 
         public Edge()
         {
+            edges = new EdgesCollection(this);
         }
 
         public Node Snode
@@ -45,7 +53,7 @@ namespace mapdemo2
                 enode = value;
             }
         }
-        public int Svalue
+        public double Svalue
         {
             get
             {
@@ -74,5 +82,10 @@ namespace mapdemo2
                 parant = value;
             }
         }
+
+        //public static implicit operator Edge(Edge v)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

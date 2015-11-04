@@ -63,5 +63,10 @@ namespace mapdemo2
         {
             base.List.Remove(item);
         }
+        public void Replace(int index, Edge oldE, Edge newE)
+        {
+            this.Remove(oldE);
+            this.AddAt(index, newE);
+        }
     }
 }

@@ -163,7 +163,7 @@
 	        addClickHandler(M, infoWindow);
 	        document.getElementById("lng").innerHTML = M.point.lng;
 	        document.getElementById("lat").innerHTML = M.point.lat;
-	        alert(M.point.lng);
+	        //alert(M.point.lng);
 	    }
     }
     ////地址解析
@@ -208,17 +208,26 @@
         });
         transit.search(start, end);
     }
+    var SearchMarkers = new Array();//记录搜索地点的标注
+    //var Sindex;//搜索标注索引
+    function ClearSearch()//清除以前的搜索标注
+    {
+        if (SearchMarkers.length != 0)
+            for (var i = SearchMarkers.length - 1; i >= 0; i--)
+            { map.removeOverlay(SearchMarkers[i]); alert(SearchMarkers[i]); SearchMarkers.pop(); }
+    }
      //添加标注
-    function addMapOverlay(markers){
+    function addMapOverlay(Mname,Mtag,Mnote,Mlng,Mlat){
       // var markers = [
       //  {content:"分类：购物超市",title:"置禾超市",imageOffset: {width:0,height:3},position:{lat:22.931241,lng:113.868932}},
       //  {content:"分类：银行",title:"工商银行",imageOffset: {width:0,height:3},position:{lat:22.93095,lng:113.868362}},
       //  {content:"分类：图书",title:"图书馆",imageOffset: {width:0,height:3},position:{lat:22.929843,lng:113.872314}},
-      //];
-      for(var index = 0; index < markers.length; index++ ){
-        //var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
-          var marker = new BMap.Marker(markers[index], { icon: BMapLib.MarkerTool.SYS_ICONS[0] });
-        var label = new BMap.Label(index, { offset: new BMap.Size(15,5) });
+        //];
+
+      //for(var index = 0; index < markers.length; index++ ){
+        var point = new BMap.Point(Mlng,Mlat);
+          var marker = new BMap.Marker(point);
+        var label = new BMap.Label(Mname, { offset: new BMap.Size(15,5) });
         //var opts = {
         //  width: 200,
         //  title: markers[index].title,
@@ -226,40 +235,53 @@
         //};
         //var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
         marker.setLabel(label);
-        M = marker;
-        M.enableDragging();
-        M.addEventListener("dragend", function () {
-            M = this;
-            window.external.ShowInfo();
+        //M = marker;
+        //marker.enableDragging();
+        //marker.addEventListener("dragend", function () {
+        //    //M = this;
+        //    window.external.ShowInfo();
+        //});
+        marker.addEventListener("rightclick", function (evt) {
+            //M = this;
         });
-        M.addEventListener("rightclick", function (evt) {
-            M = this;
-        });
+        
+        SearchMarkers.push(marker);
+        //alert(SearchMarkers[0]); 
+       
+
           //创建右键菜单
-        var menu = new BMap.ContextMenu();
-          //var removeMarker1 = function (e, ee, M) {
-          //    map.removeOverlay(M);
-          //}
-        var txtMenuItem = [
-            {
-                text: '删除',
-                callback: function () { //removeMarker1.bind(M);
-                    map.removeOverlay(M);
-                }
-            },
-            {
-                text: '修改信息',
-                callback: function () { window.external.ShowInfo(); }
-            }
-        ];
-        for (var i = 0; i < txtMenuItem.length; i++) {
-            menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
-        }
-        M.addContextMenu(menu);
+        //var menu = new BMap.ContextMenu();
+        //  //var removeMarker1 = function (e, ee, M) {
+        //  //    map.removeOverlay(M);
+        //  //}
+        //var txtMenuItem = [
+        //    {
+        //        text: '删除',
+        //        callback: function () { //removeMarker1.bind(M);
+        //            map.removeOverlay(marker);
+        //        }
+        //    }
+        //    //{
+        //    //    text: '修改信息',
+        //    //    callback: function () { window.external.ShowInfo(); }
+        //    //}
+        //];
+        //for (var i = 0; i < txtMenuItem.length; i++) {
+        //    menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+        //}
+        //marker.addContextMenu(menu);
         //window.external.ShowInfo();
         //addClickHandler(marker,infoWindow);
         map.addOverlay(marker);
-      };
+        var opts = {
+            width: 200,
+            title: Mname,
+            enableMessage: false
+        };
+        var information = "标签: " +Mtag + "<br>" + "备注: " + Mnote;
+        var infoWindow = new BMap.InfoWindow(information, opts);
+        addClickHandler(marker, infoWindow);
+      //};
     }
     //搜索
     var local = new BMap.LocalSearch(map, {

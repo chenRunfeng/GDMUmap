@@ -20,7 +20,7 @@ namespace mapdemo2
         //public string Note;
         //public double Lng;//经纬
         //public double Lat;
-        public Node(string name, string tag, string note, double lng, double lat)
+        public Node(string name="我的标注", string tag="", string note="", double lng=0, double lat=0)
         {
             this.name = name;
             this.tag = tag;
@@ -32,6 +32,7 @@ namespace mapdemo2
 
         public Node()
         {
+            nodes = new NodesCollection(this);
         }
 
         public string Name
@@ -118,5 +119,6 @@ namespace mapdemo2
                 parant = value;
             }
         }
+        
     }
 }

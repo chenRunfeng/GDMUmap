@@ -55,6 +55,10 @@ namespace mapdemo2
                 this.edge = value;
             }
         }
+        //public object Clone()
+        //{
+        //    return this.MemberwiseClone();
+        //}
         public void CreateGraph(int n, int e)//n为顶点数,e为边数
         {
             int i, j, k, w;

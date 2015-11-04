@@ -63,5 +63,21 @@ namespace mapdemo2
         {
             base.List.Remove(item);
         }
+        //public NodesCollection Clone()
+        //{
+        //    return (NodesCollection)this.MemberwiseClone();
+        //}
+        //public NodesCollection Search(string Sname, string Stag, string Snote)
+        //{
+        //    NodesCollection NC = new NodesCollection();
+        //    foreach (Node snode in MainForm.Map.Node.Nodes)
+        //    {
+        //        if (snode.Name == Sname || snode.Tag == Stag || snode.Note == Snote)
+        //        {
+        //            NC.Add(snode);
+        //        }
+        //    }
+        //    return NC;
+        //}
     }
 }

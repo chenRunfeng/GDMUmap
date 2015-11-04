@@ -42,6 +42,7 @@ namespace mapdemo2
             //vertexs[vexnumber] = new Vertex(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
             //vexnumber++;
             Node node = new Node(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
+            //MainForm.Map = new Graphic();
             MainForm.Map.Node.Nodes.Add(node);
             //node.nodes.Add(node);
         }

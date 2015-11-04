@@ -18,10 +18,12 @@ namespace mapdemo2
     {
         //Vertex[] vertexs;
         //static int vexnumber=0;
-        private static Graphic map;
+        //internal NodesCollection Nodes;
+        private static Graphic map=new Graphic();
         public static MainForm fr1;
         public static WebBrowser web1;
-
+        NodesCollection NC = new NodesCollection();//窗口内临时储存点集
+        //Node Snode;
         internal static Graphic Map
         {
             get
@@ -34,6 +36,7 @@ namespace mapdemo2
                 map = value;
             }
         }
+
 
         public MainForm()
         {
@@ -95,8 +98,62 @@ namespace mapdemo2
             frmMarker fr2 = new frmMarker();
             fr2.ShowDialog();
         }
-        //public Node Search(string Sname,string Stag,string Snote)
+        //public Node  Search(string Sname,string Stag,string Snote)
+        //{
 
+        //    foreach(Node snode in map.Node.Nodes)
+        //    {
+        //        if(snode.Name==Sname||snode.Tag==Stag||snode.Note==Snote)
+        //        {
+        //            return snode;
+        //        }
+        //    }
+        //    return null;
+        //}
+         public bool NodeSearch(string Sname, string Stag="", string Snote="")
+        {
+            NodesCollection nc = new NodesCollection();
+            //NodesCollection n = new NodesCollection();
+            //n = map.Node.Nodes;
+            foreach (Node snode1 in map.Node.Nodes)
+            {
+                nc.Add(snode1);
+            }
+            //nc = map.Node.Nodes;//临时储存点集
+            for (int i=nc.Count-1;i>=0;i--)
+            {
+                Node snode = nc[i];
+                if (snode.Name == Sname || snode.Tag == Stag || snode.Note == Snote)
+                {
+                    NC.Add(snode);
+                    nc.Remove(snode);
+                }
+                
+            }
+            //string s = "";
+            //foreach (Node snode in nc)
+            //{
+            //    if (snode.Name == Sname || snode.Tag == Stag || snode.Note == Snote)
+            //    {
+            //        NC.Add(snode);
+            //        nc.Remove(snode);
+            //    }
+            //}
+            return true;  
+        }
+       internal bool EdgeSearch(string start,string end, EdgesCollection ec, Edge e1)
+        {
+            for(int i=ec.Count-1;i>=0;i--)
+            {
+                 e1 = ec[i];
+                if (e1.Snode.Name == start && e1.Enode.Name == end)
+                {
+                    return true;
+                }
+                   
+            }
+             return false;
+        }
         private void btnMarker_Click(object sender, EventArgs e)
         {
             InitilMarktool();     
@@ -114,13 +171,40 @@ namespace mapdemo2
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-           
-            webBrowser1.Document.InvokeScript("LocalSearch", new object[] { txtSearch.Text });
+            webBrowser1.Document.InvokeScript("ClearSearch");
+            //Node SEnode = new Node();
+            NodeSearch(txtSearch.Text, txtSearch.Text, txtSearch.Text);
+            foreach(Node SEnode in NC)
+            {
+                if(SEnode!=null)
+                {
+                    webBrowser1.Document.InvokeScript("addMapOverlay", new object[] {SEnode.Name,SEnode.Tag,SEnode.Note,SEnode.Lng,SEnode.Lat });
+                }
+            }
+            NC.Clear();
+            //map.Node.Nodes.IndexOf(Snode.Name = txtSearch.Text);
+            //string s="hah";
+            //webBrowser1.Document.InvokeScript("LocalSearch", new object[] { txtSearch.Text });
         }
-
+     
         private void btnDsave_Click(object sender, EventArgs e)
         {
-
+            EdgesCollection EC = map.Edge.Edges;
+            Edge edge = new Edge(); 
+            double svalue=double.Parse(txtDistance.Text);;
+            if (EdgeSearch(txtDstart.Text, txtDend.Text, EC,edge))
+            {
+                edge.Svalue = svalue;
+            }
+            else
+            {
+                if (NodeSearch(txtDstart.Text) && NodeSearch(txtDend.Text))
+                {
+                    edge = new Edge(NC[0], NC[1]);
+                    edge.Svalue = svalue; 
+                    EC.Add(edge);
+                }
+            }
         }
     }
 }
