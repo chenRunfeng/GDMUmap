@@ -42,7 +42,7 @@ namespace mapdemo2
         {
             InitializeComponent();
             fr1 = this;
-            web1 = this.webBrowser1;
+            web1 = this.WebGdmumap;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -50,8 +50,8 @@ namespace mapdemo2
             string str_url = Application.StartupPath + "\\gdmcmap.html";
             Uri url = new Uri(str_url);
             //webBrowser1.Url = url;
-            webBrowser1.Navigate(url);
-            webBrowser1.ObjectForScripting = this;
+            WebGdmumap.Navigate(url);
+            WebGdmumap.ObjectForScripting = this;
         }
         //public  void AddVex(string name, string tag, string note, double lng, double lat)
         //{
@@ -77,20 +77,21 @@ namespace mapdemo2
         //    }
         //}
         //导航
-        public void Navigate(string start,string end)
+        internal void Navigate(Node start,Node end)
         {
-            webBrowser1.Document.InvokeScript("CarN", new object[] { start, end });
+            WebGdmumap.Document.InvokeScript("CarN", new object[] { start.Lng,start.Lat,end.Lng,end.Lat });
+            WebGdmumap.Document.InvokeScript("WalkerN", new object[] { start.Lng, start.Lat, end.Lng, end.Lat });
         }
         //初始化标注工具
         private Boolean InitilMarktool()
         {
-            webBrowser1.Document.InvokeScript("f");
+            WebGdmumap.Document.InvokeScript("f");
             return true;
         }
         //添加标注点信息
         public void AddInfo(string tag,string note,string name= "我的标注")
         {
-            webBrowser1.Document.InvokeScript("CreateMarker", new object[] {  tag, note,name });
+            WebGdmumap.Document.InvokeScript("CreateMarker", new object[] {  tag, note,name });
         }
         //弹出标注信息窗口，js调用
         public void ShowInfo()
@@ -177,7 +178,7 @@ namespace mapdemo2
         int k = 0;//用于自增后读出print里的数据
         internal void exchange(EdgesCollection edge)
         {
-            int r = edge.Count;//输入点数R
+            int r = map.Node.Nodes.Count;//输入点数R
             double[] a=new double[(r + 1) * (r + 1)];
 
             for (int i = 0; i < r; i++)
@@ -207,11 +208,11 @@ namespace mapdemo2
                 }
                 if (i == r - 1)
                 {
-                    Marx m = new Marx(r, a);
-
+                    Dijksta m = new Dijksta(r, a);
+                    string outs="";
                     m.Find_way();
-                    m.Display(txtOutroute.Text, comEnd.Text, map.Node.Nodes);
-
+                    m.Display(ref outs, comEnd.Text, map.Node.Nodes);
+                    txtOutroute.Text = outs;
 
                 }
             }
@@ -223,25 +224,33 @@ namespace mapdemo2
 
         private void btnNavigate_Click(object sender, EventArgs e)
         {
-            //Navigate(comStart.Text, comEnd.Text);
-            exchange(map.Edge.Edges);
+            if (SearchNode(comStart.Text) != null && SearchNode(comEnd.Text) != null)
+            {
+                Navigate(SearchNode(comStart.Text), SearchNode(comEnd.Text));
+                exchange(map.Edge.Edges);
+            }
+            else
+            {
+                WebGdmumap.Document.InvokeScript("CarN", new object[] { comStart,comEnd });
+                WebGdmumap.Document.InvokeScript("WalkerN", new object[] { comStart, comEnd });
+            }
         }
 
         private void btnDistance_Click(object sender, EventArgs e)
         {
-            webBrowser1.Document.InvokeScript("openGetDistance");
+            WebGdmumap.Document.InvokeScript("openGetDistance");
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            webBrowser1.Document.InvokeScript("ClearSearch");
+            WebGdmumap.Document.InvokeScript("ClearSearch");
             //Node SEnode = new Node();
             NodeSearch(txtSearch.Text, txtSearch.Text, txtSearch.Text);
             foreach(Node SEnode in NC)
             {
                 if(SEnode!=null)
                 {
-                    webBrowser1.Document.InvokeScript("addMapOverlay", new object[] {SEnode.Name,SEnode.Tag,SEnode.Note,SEnode.Lng,SEnode.Lat });
+                    WebGdmumap.Document.InvokeScript("addMapOverlay", new object[] {SEnode.Name,SEnode.Tag,SEnode.Note,SEnode.Lng,SEnode.Lat });
                 }
             }
             NC.Clear();
