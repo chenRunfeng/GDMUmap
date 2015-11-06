@@ -25,3 +25,13 @@ E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.frmMarker.resources
 E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.Properties.Resources.resources
 E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.csproj.GenerateResource.Cache
 E:\数据结构项目\GDMUmap\GDMUmap\obj\Debug\mapdemo2.csprojResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\桌面\GDMUmap\obj\Debug\mapdemo2.exe
+C:\Documents and Settings\Administrator\桌面\GDMUmap\obj\Debug\mapdemo2.pdb
+C:\Documents and Settings\Administrator\桌面\GDMUmap\bin\Debug\mapdemo2.exe
+C:\Documents and Settings\Administrator\桌面\GDMUmap\bin\Debug\mapdemo2.pdb
+C:\Documents and Settings\Administrator\桌面\GDMUmap\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\桌面\GDMUmap\obj\Debug\mapdemo2.MainForm.resources
+C:\Documents and Settings\Administrator\桌面\GDMUmap\obj\Debug\mapdemo2.frmMarker.resources
+C:\Documents and Settings\Administrator\桌面\GDMUmap\obj\Debug\mapdemo2.Properties.Resources.resources
+C:\Documents and Settings\Administrator\桌面\GDMUmap\obj\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\Administrator\桌面\GDMUmap\obj\Debug\GenerateResource.write.1.tlog

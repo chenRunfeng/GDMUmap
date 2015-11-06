@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="EdgesCollection.cs" />
     <Compile Include="Graphic.cs" />
@@ -60,12 +59,11 @@
     <Compile Include="frmMarker.Designer.cs">
       <DependentUpon>frmMarker.cs</DependentUpon>
     </Compile>
-    <Compile Include="Marx.cs" />
+    <Compile Include="Dijksta.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodesCollection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vertex.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

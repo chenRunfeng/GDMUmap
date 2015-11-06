@@ -185,8 +185,9 @@
         return new BMap.Point(lng,lat);
     }
     //驾车导航
-    function CarN(start, end) {
-
+    function CarN(startlng,startlat, endlng,endlat) {
+        var start = new BMap.Point(startlng, startlat);
+        var end = new BMap.Point(endlng, endlat);
         var driving = new BMap.DrivingRoute(map, {
             renderOptions: {
                 map: map,
@@ -201,7 +202,30 @@
             });
         }
     }
+    function CarN(start, end) {
+        var driving = new BMap.DrivingRoute(map, {
+            renderOptions: {
+                map: map,
+                autoViewport: true
+            }
+        });
+        driving.search(start, end);
+        function addClickHandler(target, window) {
+            target.addEventListener("click", function () {
+                target.openInfoWindow(window);
+
+            });
+        }
+    }
     //步行导航
+    function WalkerN(startlng, startlat, endlng, endlat) {
+        var start = new BMap.Point(startlng, startlat);
+        var end = new BMap.Point(endlng, endlat);
+        var transit = new BMap.WalkingRoute(map, {
+            renderOptions: { map: map, panel: "results" }
+        });
+        transit.search(start, end);
+    }
     function WalkerN(start, end) {
         var transit = new BMap.WalkingRoute(map, {
             renderOptions: { map: map, panel: "results" }
