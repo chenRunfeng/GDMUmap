@@ -5,18 +5,18 @@ using System.Text;
 using System.Collections;
 using System.Windows.Forms;
 
-namespace 重新做过转化窗体
+namespace mapdemo2
 {
     class Marx
     {
-        private int[] distance;  //用来保存距离      
+        private double[] distance;  //用来保存距离      
         private int row;//定义点数
         public ArrayList ways = new ArrayList();//用来保存路径
 
-        public Marx(int n, params  int[] d)//保存距离权值
+        public Marx(int n, params  double[] d)//保存距离权值
         {
             this.row = n;
-            distance = new int[row * row];
+            //distance = new int[row * row];
             for (int i = 0; i < row * row; i++)//保存距离
             {
                 this.distance[i] = d[i];
@@ -50,7 +50,7 @@ namespace 重新做过转化窗体
                 Sr.Add(Indexof_distance[i]);//将中心点到每个点的距离添加到Sr
             }
             Sr.RemoveAt(0);
-            int[] D = new int[this.row];    //存放中心点到每个点的距离
+            double[] D = new double[this.row];    //存放中心点到每个点的距离
 
             //---------------以上已经初始化了，S和Sr(里边放的都是点的编号)------------------
             int Count = this.row - 1;//编号从0开始，最大为r-1
@@ -102,15 +102,15 @@ namespace 重新做过转化窗体
             }
 
         }
-        public void Display(TextBox textBox3,ComboBox comboBox1,string []pointname)
+        public void Display(string way,string end,NodesCollection node)
         {
             //------中心到各点的最短路径----------
             //Console.WriteLine("中心到各点的最短路径如下: \n\n");
-            MessageBox.Show("中心到各点的最短路径如下: \n\n");
+            //MessageBox.Show("中心到各点的最短路径如下: \n\n");
             int sum_d_index = 0;
 
             int c = 0;
-            int d = 0;
+            string d="" ;
             //ArrayList p = new ArrayList();
 
             foreach (ArrayList mother in ways)//遍历每一项{{0}，{012}，{013}}
@@ -119,15 +119,15 @@ namespace 重新做过转化窗体
                 int[] IResult = (int[])mother.ToArray(typeof(Int32));//输出每一项并转化为数组类型
 
 
-                if (d == comboBox1.SelectedIndex)//判断要输出的终点
+                if (d == end)//判断要输出的终点
                 {
                     for (c = 0; c < IResult.Length; c++)//输出路径
                     {
-                        textBox3.Text += pointname[IResult[c]] + "--";
+                        way += node[IResult[c]] + "--";
                     }
-                    textBox3.Text += "路径长 " + distance[sum_d_index] + "\r\n";
+                    way += "路径长 " + distance[sum_d_index] + "\r\n";
                 }
-                d++;
+                //d++;
                 sum_d_index++;
 
             }

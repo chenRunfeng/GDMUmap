@@ -141,6 +141,25 @@ namespace mapdemo2
             //}
             return true;  
         }
+        internal Node SearchNode(string Sname)
+        {
+            NodesCollection nc = new NodesCollection();
+            foreach (Node snode1 in map.Node.Nodes)
+            {
+                nc.Add(snode1);
+            }
+            //nc = map.Node.Nodes;//临时储存点集
+            for (int i = nc.Count - 1; i >= 0; i--)
+            {
+                Node snode = nc[i];
+                if (snode.Name == Sname )
+                {
+                    return snode;
+                }
+
+            }
+            return null;
+        }
        internal bool EdgeSearch(string start,string end, EdgesCollection ec, Edge e1)
         {
             for(int i=ec.Count-1;i>=0;i--)
@@ -154,6 +173,49 @@ namespace mapdemo2
             }
              return false;
         }
+        //int[] print;//定义输入点到点距离大小的数组
+        int k = 0;//用于自增后读出print里的数据
+        internal void exchange(EdgesCollection edge)
+        {
+            int r = edge.Count;//输入点数R
+            double[] a=new double[(r + 1) * (r + 1)];
+
+            for (int i = 0; i < r; i++)
+            {
+                for (int j = i + 1; j < r; j++)
+                {
+
+                    MessageBox.Show(edge[k].Snode.Name + "到" + edge[k].Enode.Name + "的距离是：" + edge[k].Svalue);
+                    a[i * r + j] = edge[k].Svalue;
+                    if (k < r * (r - 1) / 2)
+                    {
+                        k++;
+                    }
+                }
+            }
+            //----完善距离矩阵(距离矩阵其实可以是个上三角矩阵，
+            //----但为了处理方便，还是将其完整成一个对称阵)-----------
+            for (int i = 0; i < r; i++)
+            {
+                for (int j = 0; j < r; j++)
+                {
+                    if (i == j)
+                    {
+                        a[i * r + j] = 0;
+                    }
+                    a[j * r + i] = a[i * r + j];
+                }
+                if (i == r - 1)
+                {
+                    Marx m = new Marx(r, a);
+
+                    m.Find_way();
+                    m.Display(txtOutroute.Text, comEnd.Text, map.Node.Nodes);
+
+
+                }
+            }
+        }
         private void btnMarker_Click(object sender, EventArgs e)
         {
             InitilMarktool();     
@@ -161,7 +223,8 @@ namespace mapdemo2
 
         private void btnNavigate_Click(object sender, EventArgs e)
         {
-            Navigate(comStart.Text, comEnd.Text);
+            //Navigate(comStart.Text, comEnd.Text);
+            exchange(map.Edge.Edges);
         }
 
         private void btnDistance_Click(object sender, EventArgs e)
@@ -198,9 +261,9 @@ namespace mapdemo2
             }
             else
             {
-                if (NodeSearch(txtDstart.Text) && NodeSearch(txtDend.Text))
+                if (SearchNode(txtDstart.Text)!=null && SearchNode(txtDend.Text)!=null)
                 {
-                    edge = new Edge(NC[0], NC[1]);
+                    edge = new Edge(SearchNode(txtDstart.Text), SearchNode(txtDend.Text));
                     edge.Svalue = svalue; 
                     EC.Add(edge);
                 }
