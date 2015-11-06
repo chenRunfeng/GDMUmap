@@ -77,9 +77,10 @@ namespace mapdemo2
         //    }
         //}
         //导航
-        public void Navigate(string start,string end)
+        internal void Navigate(Node start,Node end)
         {
-            webBrowser1.Document.InvokeScript("CarN", new object[] { start, end });
+            webBrowser1.Document.InvokeScript("CarN", new object[] { start.Lng,start.Lat,end.Lng,end.Lat });
+            webBrowser1.Document.InvokeScript("WalkerN", new object[] { start.Lng, start.Lat, end.Lng, end.Lat });
         }
         //初始化标注工具
         private Boolean InitilMarktool()
@@ -177,7 +178,7 @@ namespace mapdemo2
         int k = 0;//用于自增后读出print里的数据
         internal void exchange(EdgesCollection edge)
         {
-            int r = edge.Count;//输入点数R
+            int r = map.Node.Nodes.Count;//输入点数R
             double[] a=new double[(r + 1) * (r + 1)];
 
             for (int i = 0; i < r; i++)
@@ -208,10 +209,10 @@ namespace mapdemo2
                 if (i == r - 1)
                 {
                     Marx m = new Marx(r, a);
-
+                    string outs="";
                     m.Find_way();
-                    m.Display(txtOutroute.Text, comEnd.Text, map.Node.Nodes);
-
+                    m.Display(ref outs, comEnd.Text, map.Node.Nodes);
+                    txtOutroute.Text = outs;
 
                 }
             }
@@ -223,7 +224,7 @@ namespace mapdemo2
 
         private void btnNavigate_Click(object sender, EventArgs e)
         {
-            //Navigate(comStart.Text, comEnd.Text);
+            Navigate(SearchNode( comStart.Text),SearchNode( comEnd.Text));
             exchange(map.Edge.Edges);
         }
 

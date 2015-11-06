@@ -9,8 +9,9 @@ namespace mapdemo2
 {
     class Marx
     {
-        private double[] distance;  //用来保存距离      
+          
         private int row;//定义点数
+        private double[] distance = new double[1000];  //用来保存距离    
         public ArrayList ways = new ArrayList();//用来保存路径
 
         public Marx(int n, params  double[] d)//保存距离权值
@@ -102,7 +103,7 @@ namespace mapdemo2
             }
 
         }
-        public void Display(string way,string end,NodesCollection node)
+        public void Display(ref string way,string end,NodesCollection nodes)
         {
             //------中心到各点的最短路径----------
             //Console.WriteLine("中心到各点的最短路径如下: \n\n");
@@ -110,24 +111,24 @@ namespace mapdemo2
             int sum_d_index = 0;
 
             int c = 0;
-            string d="" ;
+            int d=0 ;
             //ArrayList p = new ArrayList();
 
             foreach (ArrayList mother in ways)//遍历每一项{{0}，{012}，{013}}
             {
-
+                string information = nodes[d].Name;
                 int[] IResult = (int[])mother.ToArray(typeof(Int32));//输出每一项并转化为数组类型
 
 
-                if (d == end)//判断要输出的终点
+                if (information == end)//判断要输出的终点
                 {
                     for (c = 0; c < IResult.Length; c++)//输出路径
                     {
-                        way += node[IResult[c]] + "--";
+                        way += nodes[IResult[c]].Name + "--";
                     }
-                    way += "路径长 " + distance[sum_d_index] + "\r\n";
+                    way += "   距离： " + distance[sum_d_index] + "\r\n";
                 }
-                //d++;
+                d++;
                 sum_d_index++;
 
             }

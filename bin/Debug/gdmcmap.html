@@ -185,8 +185,9 @@
         return new BMap.Point(lng,lat);
     }
     //驾车导航
-    function CarN(start, end) {
-
+    function CarN(startlng,startlat, endlng,endlat) {
+        var start = new BMap.Point(startlng, startlat);
+        var end = new BMap.Point(endlng, endlat);
         var driving = new BMap.DrivingRoute(map, {
             renderOptions: {
                 map: map,
@@ -202,7 +203,9 @@
         }
     }
     //步行导航
-    function WalkerN(start, end) {
+    function WalkerN(startlng, startlat, endlng, endlat) {
+        var start = new BMap.Point(startlng, startlat);
+        var end = new BMap.Point(endlng, endlat);
         var transit = new BMap.WalkingRoute(map, {
             renderOptions: { map: map, panel: "results" }
         });
