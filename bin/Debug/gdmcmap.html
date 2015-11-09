@@ -185,15 +185,17 @@
         return new BMap.Point(lng,lat);
     }
     //驾车导航
-    function CarN(startlng,startlat, endlng,endlat) {
+    var driving = new BMap.DrivingRoute(map, {
+        renderOptions: {
+            map: map,
+            autoViewport: true
+        }
+    });
+    function CarN(startlng, startlat, endlng, endlat) {
+        if (driving)
+            driving.clearResults();
         var start = new BMap.Point(startlng, startlat);
         var end = new BMap.Point(endlng, endlat);
-        var driving = new BMap.DrivingRoute(map, {
-            renderOptions: {
-                map: map,
-                autoViewport: true
-            }
-        });
         driving.search(start,end);
         function addClickHandler(target, window) {
             target.addEventListener("click", function () {
@@ -202,13 +204,33 @@
             });
         }
     }
-    function CarN(start, end) {
-        var driving = new BMap.DrivingRoute(map, {
-            renderOptions: {
-                map: map,
-                autoViewport: true
-            }
-        });
+    function CarN1(start, end) {
+        if (driving)
+            driving.clearResults();
+        driving.search(start, end);
+        function addClickHandler(target, window) {
+            target.addEventListener("click", function () {
+                target.openInfoWindow(window);
+
+            });
+        }
+    }
+    function CarN2(startlng,startlat, end) {
+        var start = new BMap.Point(startlng, startlat);
+        if (driving)
+            driving.clearResults();
+        driving.search(start, end);
+        function addClickHandler(target, window) {
+            target.addEventListener("click", function () {
+                target.openInfoWindow(window);
+
+            });
+        }
+    }
+    function CarN3(start, endlng, endlat) {
+        var end = new BMap.Point(endlng, endlat);
+        if (driving)
+            driving.clearResults();
         driving.search(start, end);
         function addClickHandler(target, window) {
             target.addEventListener("click", function () {
@@ -218,35 +240,56 @@
         }
     }
     //步行导航
+    var transit = new BMap.WalkingRoute(map, {
+        renderOptions: { map: map, panel: "results" }
+    });
     function WalkerN(startlng, startlat, endlng, endlat) {
         var start = new BMap.Point(startlng, startlat);
         var end = new BMap.Point(endlng, endlat);
-        var transit = new BMap.WalkingRoute(map, {
-            renderOptions: { map: map, panel: "results" }
-        });
+        //var transit = new BMap.WalkingRoute(map, {
+        //    renderOptions: { map: map, panel: "results" }
+        //});
+        if (transit)
+            transit.clearResults();
         transit.search(start, end);
     }
-    function WalkerN(start, end) {
-        var transit = new BMap.WalkingRoute(map, {
-            renderOptions: { map: map, panel: "results" }
-        });
+    function WalkerN1(start, end) {
+        if (transit)
+            transit.clearResults();
+        //var transit = new BMap.WalkingRoute(map, {
+        //    renderOptions: { map: map, panel: "results" }
+        //});
         transit.search(start, end);
     }
+    function WalkerN2(startlng, startlat, end) {
+        var start = new BMap.Point(startlng, startlat);
+        //var transit = new BMap.WalkingRoute(map, {
+        //    renderOptions: { map: map, panel: "results" }
+        //});
+        if (transit)
+            transit.clearResults();
+        transit.search(start, end);
+    }
+    function WalkerN3(start, endlng, endlat) {
+        var end = new BMap.Point(endlng, endlat);
+        //var transit = new BMap.WalkingRoute(map, {
+        //    renderOptions: { map: map, panel: "results" }
+        //});
+        if (transit)
+            transit.clearResults();
+        transit.search(start, end);
+    }
+    //搜索标注点 start
     var SearchMarkers = new Array();//记录搜索地点的标注
     //var Sindex;//搜索标注索引
     function ClearSearch()//清除以前的搜索标注
     {
         if (SearchMarkers.length != 0)
             for (var i = SearchMarkers.length - 1; i >= 0; i--)
-            { map.removeOverlay(SearchMarkers[i]); alert(SearchMarkers[i]); SearchMarkers.pop(); }
+            { map.removeOverlay(SearchMarkers[i]); SearchMarkers.pop(); }
     }
      //添加标注
     function addMapOverlay(Mname,Mtag,Mnote,Mlng,Mlat){
-      // var markers = [
-      //  {content:"分类：购物超市",title:"置禾超市",imageOffset: {width:0,height:3},position:{lat:22.931241,lng:113.868932}},
-      //  {content:"分类：银行",title:"工商银行",imageOffset: {width:0,height:3},position:{lat:22.93095,lng:113.868362}},
-      //  {content:"分类：图书",title:"图书馆",imageOffset: {width:0,height:3},position:{lat:22.929843,lng:113.872314}},
-        //];
 
       //for(var index = 0; index < markers.length; index++ ){
         var point = new BMap.Point(Mlng,Mlat);
@@ -307,6 +350,7 @@
         addClickHandler(marker, infoWindow);
       //};
     }
+    //搜索标注 end
     //搜索
     var local = new BMap.LocalSearch(map, {
         renderOptions: { map: map }

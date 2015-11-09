@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Collections;
+using System.IO;
 
 namespace mapdemo2
 {
@@ -44,7 +45,7 @@ namespace mapdemo2
             fr1 = this;
             web1 = this.WebGdmumap;
         }
-
+        //初始化地图
         private void Form1_Load(object sender, EventArgs e)
         {
             string str_url = Application.StartupPath + "\\gdmcmap.html";
@@ -52,6 +53,7 @@ namespace mapdemo2
             //webBrowser1.Url = url;
             WebGdmumap.Navigate(url);
             WebGdmumap.ObjectForScripting = this;
+
         }
         //public  void AddVex(string name, string tag, string note, double lng, double lat)
         //{
@@ -76,8 +78,8 @@ namespace mapdemo2
         //        MessageBox.Show("\n\n输入各点之间的距离(无通径的用个大整数表示)\n");
         //    }
         //}
-        //导航
-        internal void Navigate(Node start,Node end)
+        //标注点导航
+        internal void Navigates(Node start,Node end)
         {
             WebGdmumap.Document.InvokeScript("CarN", new object[] { start.Lng,start.Lat,end.Lng,end.Lat });
             WebGdmumap.Document.InvokeScript("WalkerN", new object[] { start.Lng, start.Lat, end.Lng, end.Lat });
@@ -111,26 +113,32 @@ namespace mapdemo2
         //    }
         //    return null;
         //}
-         public bool NodeSearch(string Sname, string Stag="", string Snote="")
+         public void NodeSearch(string Sname, string Stag="", string Snote="")
         {
-            NodesCollection nc = new NodesCollection();
-            //NodesCollection n = new NodesCollection();
-            //n = map.Node.Nodes;
-            foreach (Node snode1 in map.Node.Nodes)
-            {
-                nc.Add(snode1);
-            }
-            //nc = map.Node.Nodes;//临时储存点集
-            for (int i=nc.Count-1;i>=0;i--)
-            {
-                Node snode = nc[i];
-                if (snode.Name == Sname || snode.Tag == Stag || snode.Note == Snote)
+            //bool noNode=false;//等于false表示已有node
+                NodesCollection nc = new NodesCollection();
+                //NodesCollection n = new NodesCollection();
+                //n = map.Node.Nodes;
+                foreach (Node snode1 in map.Node.Nodes)
                 {
-                    NC.Add(snode);
-                    nc.Remove(snode);
+                    nc.Add(snode1);
                 }
-                
-            }
+                //nc = map.Node.Nodes;//临时储存点集
+                for (int i = nc.Count - 1; i >= 0; i--)
+                {
+                    Node snode = nc[i];
+                    if (snode.Name == Sname || snode.Tag == Stag || snode.Note == Snote)
+                    {
+                        NC.Add(snode);
+                        nc.Remove(snode);
+                    }
+
+                }
+            //if (NC[0] != null)
+            //    return true;
+            //else return false;
+                   
+
             //string s = "";
             //foreach (Node snode in nc)
             //{
@@ -139,8 +147,7 @@ namespace mapdemo2
             //        NC.Add(snode);
             //        nc.Remove(snode);
             //    }
-            //}
-            return true;  
+            //}  
         }
         internal Node SearchNode(string Sname)
         {
@@ -224,15 +231,38 @@ namespace mapdemo2
 
         private void btnNavigate_Click(object sender, EventArgs e)
         {
-            if (SearchNode(comStart.Text) != null && SearchNode(comEnd.Text) != null)
+            try
             {
-                Navigate(SearchNode(comStart.Text), SearchNode(comEnd.Text));
+                Navigates(SearchNode(comStart.Text), SearchNode(comEnd.Text));
                 exchange(map.Edge.Edges);
+                //else
+                //{
+                //    WebGdmumap.Document.InvokeScript("CarN", new object[] { comStart, comEnd });
+                //    WebGdmumap.Document.InvokeScript("WalkerN", new object[] { comStart, comEnd });
+                //}
             }
-            else
+            catch
             {
-                WebGdmumap.Document.InvokeScript("CarN", new object[] { comStart,comEnd });
-                WebGdmumap.Document.InvokeScript("WalkerN", new object[] { comStart, comEnd });
+                //导航，标注点和百度地图原有的地点实现导航
+                if (SearchNode(comStart.Text) != null && SearchNode(comEnd.Text) != null)
+                    Navigates(SearchNode(comStart.Text), SearchNode(comEnd.Text));
+                else if (SearchNode(comStart.Text) != null && SearchNode(comEnd.Text) == null)
+                {
+                    Node n = SearchNode(comStart.Text);
+                    WebGdmumap.Document.InvokeScript("CarN2", new object[] { n.Lng, n.Lat, comEnd.Text });
+                    WebGdmumap.Document.InvokeScript("WalkerN2", new object[] { n.Lng, n.Lat, comEnd.Text });
+                }
+                else if (SearchNode(comStart.Text) == null && SearchNode(comEnd.Text) != null)
+                {
+                    Node n = SearchNode(comEnd.Text);
+                    WebGdmumap.Document.InvokeScript("CarN3", new object[] { comStart.Text, n.Lng, n.Lat });
+                    WebGdmumap.Document.InvokeScript("WalkerN3", new object[] { comStart.Text, n.Lng, n.Lat });
+                }
+                else
+                {
+                    WebGdmumap.Document.InvokeScript("CarN1", new object[] { comStart.Text, comEnd.Text });
+                    WebGdmumap.Document.InvokeScript("WalkerN1", new object[] { comStart.Text, comEnd.Text });
+                }
             }
         }
 
@@ -243,22 +273,56 @@ namespace mapdemo2
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            WebGdmumap.Document.InvokeScript("ClearSearch");
-            //Node SEnode = new Node();
-            NodeSearch(txtSearch.Text, txtSearch.Text, txtSearch.Text);
-            foreach(Node SEnode in NC)
+            //在点集中没有找到就从百度地图云中找
+            try
             {
-                if(SEnode!=null)
+                WebGdmumap.Document.InvokeScript("ClearSearch");
+                //Node SEnode = new Node();
+                //if (NodeSearch(txtSearch.Text, txtSearch.Text, txtSearch.Text))
+                //{
+                NodeSearch(txtSearch.Text, txtSearch.Text, txtSearch.Text);
+                foreach (Node SEnode in NC)
                 {
-                    WebGdmumap.Document.InvokeScript("addMapOverlay", new object[] {SEnode.Name,SEnode.Tag,SEnode.Note,SEnode.Lng,SEnode.Lat });
+                    if (SEnode != null)
+                    {
+                        WebGdmumap.Document.InvokeScript("addMapOverlay", new object[] { SEnode.Name, SEnode.Tag, SEnode.Note, SEnode.Lng, SEnode.Lat });
+                    }
                 }
+                if(NC.Count==0)
+                { WebGdmumap.Document.InvokeScript("LocalSearch", new object[] { txtSearch.Text }); }
+                NC.Clear();
             }
-            NC.Clear();
+            //}
+            //else
+            //{
+            catch
+            {
+                //WebGdmumap.Document.InvokeScript("ClearSearch");
+                //foreach (Node SEnode in NC)
+                //{
+                //    if (SEnode != null)
+                //    {
+                //        WebGdmumap.Document.InvokeScript("addMapOverlay", new object[] { SEnode.Name, SEnode.Tag, SEnode.Note, SEnode.Lng, SEnode.Lat });
+                //    }
+                //}
+                //NC.Clear();
+                try
+                {
+                    WebGdmumap.Document.InvokeScript("ClearSearch");
+                    WebGdmumap.Document.InvokeScript("LocalSearch", new object[] { txtSearch.Text });
+                }
+                catch
+                {
+                    MessageBox.Show("不存在这个地点，请确认地点名称是否正确");
+                }
+                
+            }
+            //}
             //map.Node.Nodes.IndexOf(Snode.Name = txtSearch.Text);
             //string s="hah";
             //webBrowser1.Document.InvokeScript("LocalSearch", new object[] { txtSearch.Text });
         }
-     
+
         private void btnDsave_Click(object sender, EventArgs e)
         {
             EdgesCollection EC = map.Edge.Edges;
@@ -275,6 +339,65 @@ namespace mapdemo2
                     edge = new Edge(SearchNode(txtDstart.Text), SearchNode(txtDend.Text));
                     edge.Svalue = svalue; 
                     EC.Add(edge);
+                }
+            }
+        }
+
+        private void btnSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode==Keys.Enter)
+            {
+                btnSearch_Click(sender, e);
+            }
+        }
+
+        private void btnDreset_Click(object sender, EventArgs e)
+        {
+            txtDend.Text = "";
+            txtDistance.Text = "";
+            txtDstart.Text = "";
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(map.Node.Nodes.Count != 0)
+            {
+                DialogResult d;
+                d = MessageBox.Show("是否保存已经添加的标注点？", "提醒", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                if (d == DialogResult.OK)
+                {
+                    string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + "GDMUmap";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    if (map.Node.Nodes.Count != 0)
+                    {
+                        NodesCollection nc = map.Node.Nodes;
+                        StreamWriter sw = File.AppendText(path + "\\" + "Nodesinformation.txt");
+                        for (int i = 0; i < nc.Count; i++)
+                        {
+                            sw.WriteLine(nc[i].Name + "\r\n" + nc[i].Tag + "\r\n" + nc[i].Note + "\r\n" + nc[i].Lng.ToString() + "\r\n" + nc[i].Lat.ToString() + "\r\n");
+                        }
+                        sw.Close();
+                        MessageBox.Show("标注点已保存");
+                    }
+                    if (map.Edge.Edges.Count != 0)
+                    {
+                        EdgesCollection edge = map.Edge.Edges;
+                        StreamWriter ed = File.AppendText(path + "\\" + "Edgesinformation.txt");
+                        for (int i = 0; i < edge.Count; i++)
+                        {
+                            ed.WriteLine(edge[i].Snode.Name + "\r\n" + edge[i].Enode.Name + "\r\n" + edge[i].Svalue.ToString() + "\r\n");
+
+                        }
+                        ed.Close();
+                        MessageBox.Show("距离已保存");
+                    }
+                    //sw.WriteLine(nc[i].Name + "\r\n" + nc[i].Tag + "\r\n" + nc[i].Note + "\r\n" + nc[i].Lng.ToString + "\r\n" + nc[i].Lat.ToString + "\r\n");
+                    //sw.WriteLine("标题:" + txtTitle.Text + "\r\n" + "标签:" + comTag.Text + "\r\n" + "备注：" + txtNote.Text + "\r\n");
+                    //sw.Close();
+
                 }
             }
         }
