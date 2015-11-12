@@ -10,7 +10,7 @@ namespace mapdemo2
         private Node snode;//起点
         private Node enode;//终点
         private double svalue;//权值
-        internal EdgesCollection edges;//边的集合
+        private EdgesCollection edges;//边的集合
         private object parant;
         public Edge(Node snode,Node enode)
         {
@@ -28,6 +28,8 @@ namespace mapdemo2
 
         public Edge()
         {
+            this.snode = new Node();
+            this.enode = new Node();
             edges = new EdgesCollection(this);
         }
 

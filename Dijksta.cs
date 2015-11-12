@@ -14,10 +14,10 @@ namespace mapdemo2
         private double[] distance = new double[1000];  //用来保存距离    
         public ArrayList ways = new ArrayList();//用来保存路径
 
-        public Dijksta(int n, params  double[] d)//保存距离权值
+        public Dijksta(int n,params  double[] d)//保存距离权值
         {
             this.row = n;
-            //distance = new int[row * row];
+            distance = new double[row * row];
             for (int i = 0; i < row * row; i++)//保存距离
             {
                 this.distance[i] = d[i];
@@ -126,8 +126,8 @@ namespace mapdemo2
                     {
                         way += nodes[IResult[c]].Name + "--";
                     }
-                    way.Remove(way.LastIndexOf("--"),2);
-                    way += "距离:" + distance[sum_d_index] + "\r\n";
+                    //way.Remove(way.LastIndexOf("--"),2);
+                    way += "距离:" + distance[sum_d_index] + "米\r\n";
                 }
                 d++;
                 sum_d_index++;

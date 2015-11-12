@@ -13,7 +13,7 @@ namespace mapdemo2
         private string note;
         private double lng;//经度
         private double lat;//纬度
-        internal NodesCollection nodes;//节点的集合
+        private NodesCollection nodes;//节点的集合
         private object parant;
         //public string Tag;
         ////public string Name;

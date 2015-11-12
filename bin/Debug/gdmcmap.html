@@ -68,7 +68,7 @@
             target.openInfoWindow(window);
         });
     }
-	//初始化标注
+	//初始化标注工具
     function f()
 	{
 	    //var infoWin = new BMap.InfoWindow("HAHA", { offset: new BMap.Size(0, -10) });
@@ -351,6 +351,53 @@
       //};
     }
     //搜索标注 end
+    //添加标注
+    function addMapOverlay1(Mname, Mtag, Mnote, Mlng, Mlat) {
+        var point = new BMap.Point(Mlng, Mlat);
+        var icon = BMapLib.MarkerTool.SYS_ICONS[0];
+        var marker = new BMap.Marker(point, {icon:icon});
+        var label = new BMap.Label(Mname, { offset: new BMap.Size(15, 5) });
+        marker.enableDragging();
+        marker.addEventListener("dragend", function () {
+            M = this;
+            window.external.ShowInfo();
+        });
+        marker.addEventListener("rightclick", function (evt) {
+            M = this;
+        });
+        //创建右键菜单
+        var menu = new BMap.ContextMenu();
+        var txtMenuItem = [
+            {
+                text: '删除',
+                callback: function () { //removeMarker1.bind(M);
+                    map.removeOverlay(M);
+                    window.external.DeleteNode(M.getTitle())
+                }
+            },
+            {
+                text: '修改信息',
+                callback: function () { window.external.ShowInfo(); }
+            }
+        ];
+        for (var i = 0; i < txtMenuItem.length; i++) {
+            menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+        }
+        marker.addContextMenu(menu);
+        marker.setLabel(label);
+        marker.setTitle(Mname);
+        marker.addContextMenu(menu);
+        map.addOverlay(marker);
+        var opts = {
+            width: 200,
+            title: Mname,
+            enableMessage: false
+        };
+        var information = "标签: " + Mtag + "<br>" + "备注: " + Mnote;
+        var infoWindow = new BMap.InfoWindow(information, opts);
+        addClickHandler(marker, infoWindow);
+        //};
+    }
     //搜索
     var local = new BMap.LocalSearch(map, {
         renderOptions: { map: map }

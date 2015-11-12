@@ -36,7 +36,7 @@ namespace mapdemo2
         private void button1_Click(object sender, EventArgs e)
         {
             MainForm.fr1.AddInfo( comTag.Text, txtNote.Text, txtTitle.Text);
-            double lng, lat;
+            double lng, lat;//经纬度
             lng = double.Parse(MainForm.web1.Document.GetElementById("lng").InnerText);
             lat = double.Parse(MainForm.web1.Document.GetElementById("lat").InnerText);
             //vertexs[vexnumber] = new Vertex(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
@@ -44,7 +44,14 @@ namespace mapdemo2
             Node node = new Node(txtTitle.Text, comTag.Text, txtNote.Text, lng, lat);
             //MainForm.Map = new Graphic();
             MainForm.Map.Node.Nodes.Add(node);
+            comTag.Items.Add(comTag.Text);
+            this.Close();
             //node.nodes.Add(node);
+        }
+
+        private void btnCancle_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

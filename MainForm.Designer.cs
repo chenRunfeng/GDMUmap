@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnMarker = new System.Windows.Forms.Button();
             this.btnDistance = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -53,7 +58,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtOutroute = new System.Windows.Forms.TextBox();
             this.WebGdmumap = new System.Windows.Forms.WebBrowser();
+            this.label7 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -63,6 +70,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.btnMarker);
             this.panel1.Controls.Add(this.btnDistance);
             this.panel1.Controls.Add(this.tabControl1);
@@ -71,6 +79,57 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(211, 508);
             this.panel1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Location = new System.Drawing.Point(5, 438);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 67);
+            this.panel2.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(41, 15);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 12);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "驾车：";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(41, 49);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 12);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "步行：";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(89, 15);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(31, 12);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "实线";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(90, 49);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(31, 12);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "虚线";
             // 
             // btnMarker
             // 
@@ -134,10 +193,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comEnd.FormattingEnabled = true;
-            this.comEnd.Items.AddRange(new object[] {
-            "门诊部",
-            "广医后门"});
             this.comEnd.Location = new System.Drawing.Point(75, 76);
+            this.comEnd.MaxDropDownItems = 5;
             this.comEnd.Name = "comEnd";
             this.comEnd.Size = new System.Drawing.Size(102, 20);
             this.comEnd.TabIndex = 3;
@@ -148,10 +205,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comStart.FormattingEnabled = true;
-            this.comStart.Items.AddRange(new object[] {
-            "门诊部",
-            "广医后门"});
             this.comStart.Location = new System.Drawing.Point(76, 40);
+            this.comStart.MaxDropDownItems = 5;
             this.comStart.Name = "comStart";
             this.comStart.Size = new System.Drawing.Size(101, 20);
             this.comStart.TabIndex = 2;
@@ -306,6 +361,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtOutroute);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
@@ -336,6 +392,16 @@
             this.WebGdmumap.Name = "WebGdmumap";
             this.WebGdmumap.Size = new System.Drawing.Size(715, 528);
             this.WebGdmumap.TabIndex = 1;
+            this.WebGdmumap.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebGdmumap_DocumentCompleted);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(24, 128);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(149, 12);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "起点固定为第一个添加的点";
             // 
             // MainForm
             // 
@@ -349,6 +415,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -389,6 +457,12 @@
         private System.Windows.Forms.TextBox txtDstart;
         private System.Windows.Forms.Label labDsart;
         private System.Windows.Forms.Button btnDsave;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label7;
     }
 }
 

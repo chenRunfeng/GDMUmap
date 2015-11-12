@@ -74,11 +74,13 @@
             this.btnCancle.TabIndex = 3;
             this.btnCancle.Text = "取消";
             this.btnCancle.UseVisualStyleBackColor = true;
+            this.btnCancle.Click += new System.EventHandler(this.btnCancle_Click);
             // 
             // comTag
             // 
             this.comTag.FormattingEnabled = true;
             this.comTag.Location = new System.Drawing.Point(70, 69);
+            this.comTag.MaxDropDownItems = 5;
             this.comTag.Name = "comTag";
             this.comTag.Size = new System.Drawing.Size(121, 20);
             this.comTag.TabIndex = 4;
